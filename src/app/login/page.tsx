@@ -52,7 +52,7 @@ export default function LoginPage() {
         title: 'Success',
         description: 'Logged in successfully.',
       });
-      router.push('/');
+      router.push('/dashboard');
     } else {
       toast({
         variant: 'destructive',
