@@ -67,6 +67,9 @@ export default function SignupPage() {
       if (error.code === 'auth/email-already-in-use') {
         description = 'This email is already in use.';
       }
+      if (error.code === 'auth/invalid-api-key') {
+          description = 'Invalid API Key. Please check your Firebase configuration.';
+      }
       toast({
         variant: 'destructive',
         title: 'Signup Failed',

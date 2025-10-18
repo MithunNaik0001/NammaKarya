@@ -29,7 +29,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email.' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  password: z.string().min(1, { message: 'Password is required.' }),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -53,13 +53,19 @@ export default function LoginPage() {
         title: 'Success',
         description: 'Logged in successfully.',
       });
-      router.push('/dashboard');
-    } catch (error) {
+      router.push('/');
+    } catch (error: any) {
       console.error('Login Error:', error);
+      let description = 'An unexpected error occurred.';
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        description = 'Invalid email or password.';
+      } else if (error.code === 'auth/invalid-api-key') {
+        description = 'Invalid API Key. Please check your Firebase configuration.';
+      }
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: 'Invalid email or password.',
+        description: description,
       });
     }
   };
