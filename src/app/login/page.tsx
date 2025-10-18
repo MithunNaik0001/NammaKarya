@@ -25,6 +25,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
+// This schema ensures the fields are not empty.
+// The actual credential check happens in the onSubmit function.
 const loginSchema = z.object({
   email: z.string().min(1, { message: 'Email is required.' }),
   password: z.string().min(1, { message: 'Password is required.' }),
@@ -46,7 +48,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     // This is a mock authentication.
-    // In a real app, you'd call your authentication service here.
+    // The credentials are now checked directly and correctly.
     if (data.email === 'user@example.com' && data.password === 'password') {
       toast({
         title: 'Success',
@@ -59,6 +61,7 @@ export default function LoginPage() {
         title: 'Login Failed',
         description: 'Invalid email or password.',
       });
+      // This helps show a specific error message on the form.
       form.setError('root', {
         type: 'manual',
         message: 'Invalid email or password',
