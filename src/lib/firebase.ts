@@ -1,10 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import 'dotenv/config'
 
 // Your web app's Firebase configuration
-// The config is populated with environment variables
+// The config is populated with environment variables from your hosting provider.
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -16,11 +16,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 let app;
-try {
-  app = initializeApp(firebaseConfig);
-} catch (e) {
-  console.error("Firebase initialization error", e);
-  // In a real app, you might want to handle this error more gracefully
-  // For now, we'll just log it. The app will likely fail to use Firebase services.
+// Check if Firebase has already been initialized
+if (!getApps().length) {
+  try {
+    app = initializeApp(firebaseConfig);
+  } catch (e) {
+    console.error("Firebase initialization error", e);
+  }
+} else {
+  app = getApps()[0];
 }
+
 export const auth = getAuth(app);
