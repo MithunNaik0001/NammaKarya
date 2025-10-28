@@ -53,7 +53,7 @@ export default function LoginPage() {
         title: 'Success',
         description: 'Logged in successfully.',
       });
-      router.push('/home');
+      router.push('/actions');
     } catch (error: any) {
       console.error('Login Error:', error);
       let description = 'An unexpected error occurred.';
