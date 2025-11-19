@@ -39,7 +39,7 @@ export default function ActionsPage() {
           </CardHeader>
           <CardContent>
             <Button asChild className="w-full">
-              <Link href="#">Hire a Professional</Link>
+              <Link href="/hire-proffesion">Hire a Professional</Link>
             </Button>
           </CardContent>
         </Card>

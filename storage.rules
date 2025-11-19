@@ -1,0 +1,21 @@
+// Storage emulator rules for local development.
+// These rules are permissive for local testing only — do NOT use in production.
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // User profile images (permissive for local development)
+    match /profilePhotos/{userId}/{allPaths=**} {
+      // Allow writes during local development so the UI can upload without
+      // requiring an authenticated user. In production you should enforce
+      // authentication checks like `request.auth != null && request.auth.uid == userId`.
+      allow write: if true;
+      allow read: if true;
+    }
+
+    // default: block everything else
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
